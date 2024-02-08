@@ -1,16 +1,34 @@
-import React from 'react';
+import React from "react";
 
-import BlogSummaryCard from '@/components/BlogSummaryCard';
+import BlogSummaryCard from "@/components/BlogSummaryCard";
 
-import styles from './homepage.module.css';
+import styles from "./homepage.module.css";
+import { getBlogPostList } from "@/helpers/file-helpers";
+import { BLOG_TITLE } from "@/constants";
 
-function Home() {
+export const metadata = {
+  title: BLOG_TITLE,
+  description: "A wonderful blog about JavaScript",
+};
+
+async function Home() {
+  const blogPosts = await getBlogPostList();
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.mainHeading}>
-        Latest Content:
-      </h1>
+      <h1 className={styles.mainHeading}>Latest Content:</h1>
 
+      {blogPosts.map((blogPost) => {
+        return (
+          <React.Fragment key={blogPost.publishedOn}>
+            <BlogSummaryCard
+              slug={blogPost.slug}
+              title={blogPost.title}
+              abstract={blogPost.abstract}
+              publishedOn={blogPost.publishedOn}
+            />
+          </React.Fragment>
+        );
+      })}
       {/* TODO: Iterate over the data read from the file system! */}
       <BlogSummaryCard
         slug="example"
