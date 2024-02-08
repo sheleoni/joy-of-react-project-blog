@@ -11,8 +11,10 @@ export const metadata = {
   description: "A wonderful blog about JavaScript",
 };
 
+const cachedGetBlogPostList = React.cache(getBlogPostList)
+
 async function Home() {
-  const blogPosts = await getBlogPostList();
+  const blogPosts = await cachedGetBlogPostList();
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.mainHeading}>Latest Content:</h1>

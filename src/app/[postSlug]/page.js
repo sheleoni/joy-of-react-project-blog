@@ -7,9 +7,10 @@ import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 
+const cachedLoadBlogPost = React.cache(loadBlogPost);
+
 export async function generateMetadata({ params }) {
   const blogMDX = await loadBlogPost(params.postSlug);
-  console.log(blogMDX.frontmatter.abstract, "blogMDX.frontmatter.abstract");
   return {
     title: `${blogMDX.frontmatter.title} • ${BLOG_TITLE}`,
     description: blogMDX.frontmatter.abstract,
@@ -17,9 +18,8 @@ export async function generateMetadata({ params }) {
 }
 
 async function BlogPost({ params }) {
-  console.log(params.postSlug); // get the slug by the file name! [postSlug] = params.postSlug !!
 
-  const blogMDX = await loadBlogPost(params.postSlug);
+  const blogMDX = await cachedLoadBlogPost(params.postSlug);
   return (
     <article className={styles.wrapper}>
       <BlogHero
