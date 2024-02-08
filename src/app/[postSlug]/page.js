@@ -6,6 +6,7 @@ import styles from "./postSlug.module.css";
 import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
+import { Code } from "bright";
 
 const cachedLoadBlogPost = React.cache(loadBlogPost);
 
@@ -18,7 +19,6 @@ export async function generateMetadata({ params }) {
 }
 
 async function BlogPost({ params }) {
-
   const blogMDX = await cachedLoadBlogPost(params.postSlug);
   return (
     <article className={styles.wrapper}>
@@ -27,7 +27,12 @@ async function BlogPost({ params }) {
         publishedOn={blogMDX.frontmatter.publishedOn}
       />
       <div className={styles.page}>
-        <MDXRemote source={blogMDX.content} />
+        <MDXRemote
+          source={blogMDX.content}
+          components={{
+            pre: Code,
+          }}
+        />
       </div>
     </article>
   );
