@@ -7,6 +7,13 @@ import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 import { Code } from "bright";
+import dynamic from "next/dynamic";
+import Spinner from "@/components/Spinner";
+
+const DivisionGroupsDemo = dynamic(
+  () => import("@/components/DivisionGroupsDemo"),
+  { loading: Spinner }
+);
 
 const cachedLoadBlogPost = React.cache(loadBlogPost);
 
@@ -27,10 +34,12 @@ async function BlogPost({ params }) {
         publishedOn={blogMDX.frontmatter.publishedOn}
       />
       <div className={styles.page}>
+        {/*  todo: lazy load DivisionGroupsDemo component */}
         <MDXRemote
           source={blogMDX.content}
           components={{
             pre: Code,
+            DivisionGroupsDemo,
           }}
         />
       </div>
