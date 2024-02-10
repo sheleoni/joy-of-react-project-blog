@@ -66,7 +66,7 @@ function DivisionGroupsDemo({
               <motion.div key={groupIndex} className={styles.group}>
                 {range(numOfItemsPerGroup).map((index) => {
                   const ballNumber =
-                    (numOfItems / numOfGroups) * groupIndex + (index + 1);
+                    numOfItemsPerGroup * groupIndex + (index + 1);
                   return (
                     // <LayoutGroup>
                     <motion.div
@@ -96,7 +96,17 @@ function DivisionGroupsDemo({
           <p className={styles.remainderHeading}>Remainder Area</p>
 
           {range(remainder).map((index) => {
-            return <div key={index} className={styles.item} />;
+            const ballNumber =
+              numOfItemsPerGroup * numOfGroups + remainder - index;
+            return (
+              <motion.div
+                key={ballNumber}
+                className={styles.item}
+                layoutId={ballNumber}
+              >
+                {ballNumber}
+              </motion.div>
+            );
           })}
         </div>
       )}
