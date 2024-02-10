@@ -9,12 +9,25 @@ import SliderControl from "@/components/SliderControl";
 import Equation from "./Equation";
 import styles from "./DivisionGroupsDemo.module.css";
 
+import { LayoutGroup, motion } from "framer-motion";
+
 function DivisionGroupsDemo({
   numOfItems = 12,
   initialNumOfGroups = 1,
   includeRemainderArea,
 }) {
   const [numOfGroups, setNumOfGroups] = React.useState(initialNumOfGroups);
+
+  const id = React.useId();
+
+  const [items, setItems] = React.useState(() => {
+    return range(numOfItems).map(() => {
+      return {
+        id: crypto.randomUUID(),
+      };
+    });
+  });
+  console.log(items, "items");
 
   const numOfItemsPerGroup = Math.floor(numOfItems / numOfGroups);
 
@@ -48,17 +61,33 @@ function DivisionGroupsDemo({
 
       <div className={styles.demoWrapper}>
         <div className={clsx(styles.demoArea)} style={gridStructure}>
-          {range(numOfGroups).map((groupIndex) => (
-            <div key={groupIndex} className={styles.group}>
-              {range(numOfItemsPerGroup).map((index) => {
-                return (
-                  <div key={index} className={styles.item}>
-                    {groupIndex}-{index}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
+          {range(numOfGroups).map((groupIndex) => {
+            return (
+              <motion.div key={groupIndex} className={styles.group}>
+                {range(numOfItemsPerGroup).map((index) => {
+                  const ballNumber =
+                    (numOfItems / numOfGroups) * groupIndex + (index + 1);
+                  return (
+                    // <LayoutGroup>
+                    <motion.div
+                      key={ballNumber}
+                      className={styles.item}
+                      layoutId={ballNumber}
+                      layout={"position"}
+                      transition={{
+                        type: "spring",
+                        stiffness: 250,
+                        damping: 40,
+                      }}
+                    >
+                      {ballNumber}
+                    </motion.div>
+                    // </LayoutGroup>
+                  );
+                })}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 
