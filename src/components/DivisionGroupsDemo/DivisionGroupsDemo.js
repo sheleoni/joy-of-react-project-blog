@@ -63,29 +63,29 @@ function DivisionGroupsDemo({
         <div className={clsx(styles.demoArea)} style={gridStructure}>
           {range(numOfGroups).map((groupIndex) => {
             return (
-              <motion.div key={groupIndex} className={styles.group}>
-                {range(numOfItemsPerGroup).map((index) => {
-                  const ballNumber =
-                    numOfItemsPerGroup * groupIndex + (index + 1);
-                  return (
-                    // <LayoutGroup>
-                    <motion.div
-                      key={ballNumber}
-                      className={styles.item}
-                      layoutId={ballNumber}
-                      layout={"position"}
-                      transition={{
-                        type: "spring",
-                        stiffness: 250,
-                        damping: 40,
-                      }}
-                    >
-                      {ballNumber}
-                    </motion.div>
-                    // </LayoutGroup>
-                  );
-                })}
-              </motion.div>
+              <LayoutGroup>
+                <motion.div key={groupIndex} className={styles.group}>
+                  {range(numOfItemsPerGroup).map((index) => {
+                    const ballNumber =
+                      numOfItemsPerGroup * groupIndex + (index + 1);
+                    return (
+                      <motion.div
+                        key={ballNumber}
+                        className={styles.item}
+                        layoutId={ballNumber}
+                        layout={"position"}
+                        transition={{
+                          type: "spring",
+                          stiffness: 250,
+                          damping: 40,
+                        }}
+                      >
+                        {ballNumber}
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              </LayoutGroup>
             );
           })}
         </div>
