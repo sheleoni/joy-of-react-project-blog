@@ -16,6 +16,8 @@ const COLORS = [
   { label: "blue", value: "hsl(235deg 100% 65%)" },
 ];
 
+import { motion } from "framer-motion";
+
 function CircularColorsDemo() {
   const [timeElapsed, setTimeElapsed] = React.useState(0);
   const [intervalId, setIntervalId] = React.useState(undefined);
@@ -34,7 +36,7 @@ function CircularColorsDemo() {
     window.clearInterval(intervalId);
   };
 
-  const selectedColor = COLORS[0];
+  const selectedColor = COLORS[timeElapsed % COLORS.length];
 
   return (
     <Card as="section" className={styles.wrapper}>
@@ -44,7 +46,12 @@ function CircularColorsDemo() {
 
           return (
             <li className={styles.color} key={index}>
-              {isSelected && <div className={styles.selectedColorOutline} />}
+              {isSelected && (
+                <motion.div
+                  className={styles.selectedColorOutline}
+                  layoutId={"123"}
+                />
+              )}
               <div
                 className={clsx(
                   styles.colorBox,
