@@ -15,6 +15,11 @@ const DivisionGroupsDemo = dynamic(
   { loading: Spinner }
 );
 
+const CircularColorsDemo = dynamic(
+  () => import("@/components/CircularColorsDemo"),
+  { loading: Spinner }
+);
+
 const cachedLoadBlogPost = React.cache(loadBlogPost);
 
 export async function generateMetadata({ params }) {
@@ -40,6 +45,7 @@ async function BlogPost({ params }) {
           components={{
             pre: Code,
             DivisionGroupsDemo,
+            CircularColorsDemo,
           }}
         />
       </div>

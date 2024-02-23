@@ -27,7 +27,6 @@ function DivisionGroupsDemo({
       };
     });
   });
-  console.log(items, "items");
 
   const numOfItemsPerGroup = Math.floor(numOfItems / numOfGroups);
 
